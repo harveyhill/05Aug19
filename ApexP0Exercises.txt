@@ -1,0 +1,139 @@
+public class ApexP0Exercises{
+////////////////////////////////////////////////////////////
+//
+//	ApexP0Exercises
+//	Created on: 8/21/19
+//	Due on: 8/26/19
+//	Author: William Brown III
+//	Description: 8 Problems, solve them
+//
+////////////////////////////////////////////////////////////
+	private String name;
+    
+    // Default Constructor
+    public ApexP0Exercises(String name){
+        this.name = name;
+    }
+    
+    // Fibonacci
+    public static Integer nFibonacci(Integer n){
+        if(n == 0){
+            return 0;
+        }
+        if(n == 1){
+            return 1;
+        }
+        return nFibonacci(n-1) + nFibonacci(n-2); 
+    }
+    
+    // Sort Array
+    public static Integer[] sortArray(Integer[] intList){
+        for(Integer j = 1; j < intList.size(); j++){
+            Integer num = intList[j];
+            Integer i = j-1;
+            
+            while((i >=0) && (intList[i] > num)){
+                intList[i+1] = intList[i];
+                i--;
+            }
+            intList[i+1] = num;
+        }
+        return intList;
+    }
+    
+    // Return the factorial of n
+    // Factorial
+    public static Integer nFactorial(Integer n){
+        if(n == 0 || n == 1){
+            return 1;
+        }
+        return n * nFactorial(n-1);
+    }
+    
+    // Rotate Left
+    // Given an array and an integer, rotate the values in array left times
+    public static Integer[] rotateLeftNTimes(Integer[] arrays, Integer n){
+        List<Integer> result = new List<Integer>();
+        Integer size = arrays.size();
+        Integer mod = Math.mod(n, size);
+        for(Integer i = 0; i < size; i++){
+            result.add(arrays[Math.mod((i+mod), size)]);
+        }
+        return result;
+    }
+    
+    // Return true if brackets are balanced
+    // Balanced Brackets
+    public static Boolean bracketsAreBalanced(String s){
+        Integer bracket;
+        Stack stack = new Stack();
+        for(Integer i = 0; i < s.length(); i++){
+            bracket = s.charAt(i);
+            if(bracket == 123 || bracket == 91 || bracket == 40){ //bracket == '{' || bracket == '[' || bracket == '('
+                stack.push(bracket);
+            } else {
+                if(bracket == 125){ // bracket == '}'
+                    bracket = 123; // bracket = '{'
+                }
+                else if(bracket == 93){ // bracket == ']'
+                    bracket = 91; // bracket = '['
+                }
+                else if(bracket == 41){ // bracket == ')'
+                    bracket = 40; // bracket = '('
+                }
+                
+                if(stack.isEmpty()){
+                    return false;
+                }
+                if(bracket == stack.peek()){
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    
+    public class StackUnderflowException extends Exception {
+    /* Custom exception */
+	}
+    
+    public class Stack {
+    private List<Object> items {get; set;}
+    
+    public Stack() {
+        this.items = new List<Object>();
+    }
+    
+    public Integer size() {
+        return this.items.size();
+    }
+
+    public Boolean isEmpty() {
+        return size() == 0;
+    }
+        
+    public void push(Object itemToPush) {
+        this.items.add(itemToPush);
+    }
+    
+    public Object pop() {
+        if (isEmpty()) {
+            throw new StackUnderflowException();
+        }
+        
+        return this.items.remove(size() - 1);
+    }
+    
+    public Object peek() {
+        if (isEmpty()) {
+            throw new StackUnderflowException();
+        }
+        
+        return this.items.get(size() - 1);
+    }    
+}
+    
+}
