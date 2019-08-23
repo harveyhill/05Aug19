@@ -1,0 +1,312 @@
+/*
+ *  ApexP0Exercises
+ *  Created: 8/22/2019
+ *  Author: Benjamin Artman
+ *  Discription: An assortment of coding challenges. 
+ */
+
+public class ApexP0Exercises {
+
+    /*
+     * Swaps two values in an integer array;
+     */    
+    public static Integer[] SwapIntegerArray(Integer[] intList, Integer i, Integer j){
+        Integer temp = intList[i];
+        intList[i] = intList[j];
+        intList[j] = temp;
+        return intList;
+    }
+    
+    /*
+     * 1. Return the nth Fibonacci number
+     * Test Cases:
+     * Input: 0     Output: 0
+     * Input: 1    Output: 1
+     * Input: 2     Output: 1
+     * Input: 10    Output: 55
+    */
+    public static Integer nFibonacci( Integer n ){
+        if (n <= 1){
+            return n;
+        } else {
+            return nFibonacci(n-1) + nFibonacci(n-2);
+        }
+	}
+	
+    /*
+     * 2. Sort an array of integers.
+     * Test Cases:
+     * Input: [2,4,5,1,3,1]     Output: [1,1,2,3,4,5]
+     * Input: [5,4,3,2,1]     Output: [1,2,3,4,5]
+     *
+     * Don't use the sort() method... that would be lame.
+    */
+    public static Integer[] sortArray( Integer[] intList ) {
+        Integer n = intList.size();
+        for (Integer i = 0; i < n; i++){
+            for (Integer j = i+1; j < n; j++){
+                if (intList[i] > intList[j]){
+                    SwapIntegerArray(intList, i, j);
+                }
+            }
+        }
+        Return intList;
+    }
+    
+    /*
+     * 3. Return the factorial of n.
+     * Test Cases:
+     * Input: 0    Output: 1
+     * Input: 1    Output: 1
+     * Input: 3    Output: 6
+    */
+    public static Integer nFactorial( Integer n) {
+        if (n == 0){
+            return 1;
+        }
+        Integer factorial = 0;
+        for(Integer i = 0; i <= n; i++){
+            factorial += i;
+        }
+        return factorial;
+    }
+    
+    /*
+     * 4. Rotate left
+     * Given an array, array, and an integer, n, rotate the values in array left n times and return array
+     * Test Cases:
+     * Input: [1,2,3,4,5], 1    Output: [2,3,4,5,1]
+     * Input: [1,2,3,4,5], 6    Output: [2,3,4,5,1]
+     * Input: [1,2,3,4,5], 3    Output: [4,5,1,2,3]
+    */
+    public static Integer[] rotateLeftNTimes( Integer[] arr, Integer n) {
+    	Integer m = arr.size();
+        for (Integer k = 0; k < n; k++){
+            for (Integer i = 0; i < m-1; i++){
+                if (i == 0){
+                    SwapIntegerArray(arr, i, m-1);
+                } else {
+                    SwapIntegerArray(arr, i-1, i);
+                }
+            } 
+    	}
+        Return arr;
+    }
+    
+    /*
+     * 5. Balanced Brackets
+     * A bracket is any one of the following: (, ), {, }, [, or ]
+     * 
+     * The following are balanced brackets:
+     *    ( )
+     *    ( ) ( )
+     *    ( ( ) )
+     *    ( { [ ] } )
+     *
+     * The following are NOT balanced brackets:
+     *   (
+     *   )
+     *   ( ( )
+     *   ( [ ) ]
+     *
+     * Return true if balanced
+     * Return false if not balanced
+    */
+    public static Boolean bracketsAreBalanced( String s ) {
+        String stack = '';
+        Integer head = -1;
+        String temp = '';
+        for(Integer i = 0; i < s.length(); i++){
+            
+            if(s.substring(i, i+1).contains(')')) {
+                if (head >= 0){
+                    if(stack.substring(head, head+1).contains('(')){
+                        stack = stack.substring(0, head);
+                        head--;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else if(s.substring(i, i+1).contains('}')) {
+                if (head >= 0){
+                    if(stack.substring(head, head+1).contains('{')){
+                        stack = stack.substring(0, head);
+                        head--;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } if(s.substring(i, i+1).contains(']')) {
+                if (head >= 0){
+                    if(stack.substring(head, head+1).contains('[')){
+                        stack = stack.substring(0, head);
+                        head--;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else if(s.substring(i, i+1).contains('(')) {
+                stack += '(';
+                head++;
+            } else if(s.substring(i, i+1).contains('{')) {
+                stack += '{';
+                head++;
+            } else if(s.substring(i, i+1).contains('[')) {
+                stack += '[';
+                head++;
+            }
+        }
+        if (head == -1){
+            Return true;
+        } else {
+            return false;
+        }
+    }
+     
+    /* You should NOT be submitting answers that you find online. You will be expected to be able to defend any of these solutions without notice. */
+     
+    /*
+     * 6. Create a method that retrieves a list of all accounts and updates those accounts.
+     *      Create a custom field on the Account standard object called Size__c that will be a 
+     * picklist containing small/medium/large.
+     *     Create a method that retrieves a list of all accounts. 
+     *         - If an account has between 1-1000 employees then it is classified as small.
+     *         - If an account has between 1001-10000 employees it is classified as medium.
+    *         - If an account has more than 10000 employees it is classified as large.
+     *     Update the Size__c field on each account to reflect the amount of employees in the Account.
+    */
+    public static void updateAccountSize( ) {
+    	list<Account> accounts = [Select NumberOfEmployees, size__c
+                                  From Account];
+        
+        //create custom field type
+        for(Account acc : accounts){
+            if(acc.NumberOfEmployees > 0 && acc.NumberOfEmployees <= 1000){
+                acc.size__c = 'small';
+            } else if(acc.NumberOfEmployees > 1000 && acc.NumberOfEmployees <= 10000){
+                acc.size__c = 'medium';
+            } else if(acc.NumberOfEmployees > 10000){
+                acc.size__c = 'large';
+            }
+        }
+        database.update(accounts, false);
+        
+    }
+     
+    /* 
+     * 7. Create a method that will find all leads that contain 'ca' in their fields. 
+     *     If a lead is located in California(CA), change their Lead Status field to 'Closed - Not 
+     * Converted' and their description should display the message, "We are no longer doing 
+     * business in California."
+     */
+    public static void updateCALeads( ) {
+    	List<Lead> leads = [Select State, Status, Description
+                            From Lead
+                           ];
+        for(Lead L : leads){
+            if (L.State == 'CA'){
+                L.Status = 'Closed - Not Converted';
+                L.Description = 'We are no longer doing business in California.';
+            }
+        }
+        database.update(leads, false);
+    }
+     
+    /*
+     * 8. Create a method that will find all Opportunities which have already passed their Close Date 
+     * and have a Stage field that is not 'Closed Won'. Since they have passed their Close Date and 
+     * they are not marked as 'Closed Won', they should be marked as 'Closed Lost'.
+     */
+    public static void closePastDueOpportunities( ) {
+    	List<Opportunity> opp = [Select CloseDate, StageName
+                                 From Opportunity
+                                 Where CloseDate < TODAY and StageName != 'Closed Won'
+                                ];
+        for(Opportunity opper : opp){
+            opper.StageName = 'Closed Lost';
+        }
+        database.update(opp, false);
+    }
+    
+    
+    public ApexP0Exercises(){
+
+        Integer fib = nFibonacci(0);
+        system.debug('fib 0: ' + fib);
+        fib = nFibonacci(1);
+        system.debug('fib 1: ' + fib);
+        fib = nFibonacci(2);
+        system.debug('fib 2: ' + fib);
+        fib = nFibonacci(10);
+        system.debug('fib 3: ' + fib);
+        
+        Integer[] intArr = new Integer[]{2,4,5,1,3,1};
+        intArr = sortArray(intArr);
+        system.debug('Sort [2,4,5,1,3,1]: ' + intArr);
+        intArr = new Integer[]{5,4,3,2,1};
+        intArr = sortArray(intArr);
+        system.debug('Sort [5,4,3,2,1]: ' + intArr);
+        
+        Integer fact = nfactorial(0);
+        system.debug('Fact 0: ' + fact);
+        fact = nfactorial(1);
+        system.debug('Fact 1: ' + fact);
+        fact = nfactorial(3);
+        system.debug('Fact 3: ' + fact);
+        
+        intArr = new Integer[]{1,2,3,4,5};
+        intArr = rotateLeftNTimes(intArr, 1);
+        system.debug('Rotate 1: ' + intArr);
+        intArr = new Integer[]{1,2,3,4,5};
+        intArr = rotateLeftNTimes(intArr, 6);
+        system.debug('Rotate 6: ' + intArr);
+        intArr = new Integer[]{1,2,3,4,5};
+        intArr = rotateLeftNTimes(intArr, 3);
+        system.debug('Rotate 3: ' + intArr);
+        
+        Boolean test = bracketsAreBalanced('(([{}]))'); //should return true;
+        if (test == true){
+            System.debug('(([{}])): TRUE');
+        } else {
+            System.debug('(([{}])): FALSE');
+        }
+        test = bracketsAreBalanced('{([)}'); //should return false;
+        if (test == true){
+            System.debug('{([)}: TRUE');
+        } else {
+            System.debug('{([)}: FALSE');
+        }
+        test = bracketsAreBalanced('{(])}'); //should return false;
+        if (test == true){
+            System.debug('{(])}: TRUE');
+        } else {
+            System.debug('{(])}: FALSE');
+        }
+        test = bracketsAreBalanced('(())'); //should return true;
+        if (test == true){
+            System.debug('(()): TRUE');
+        } else {
+            System.debug('(()): FALSE');
+        }
+        test = bracketsAreBalanced('({['); //should return false;
+        if (test == true){
+            System.debug('({[: TRUE');
+        } else {
+            System.debug('({[: FALSE');
+        }
+        
+        
+        //bracketsAreBalanced( String s )
+        updateAccountSize();
+        updateCALeads();
+        closePastDueOpportunities();
+        
+    }
+    
+}
