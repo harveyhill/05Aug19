@@ -1,0 +1,141 @@
+public class SOQLDMLExample {
+
+    /////////////////////////////////////////////////////
+    //
+    //  Name: SOQLSMLExample
+    //  Author: Harvey Hill
+    //  Created: 2/21/19
+    //  Updated: 8/22/19
+    //  Description: Example soql and dml uses in apex
+    //  and commented examples of additional soql statements.
+    //
+    ///////////////////////////////////////////////////
+    
+    //Example SOQL
+        //LIMIT
+            // Limit limits the number of records returned
+            // Example 
+            // [SELECT lastname FROM Contact LIMIT 1]
+            // Returns one record, the first record.
+
+        //OFFSET
+            // Offset determines the starting row returned of the query
+            // Commonly used for pagination. 
+            // Example
+            // [SELECT lastname FROM Contact LIMIT 100 OFFSET 50]
+            // This returns records 51-150 of the query results.
+
+        //WITH
+            // Although similar to WHERE, with has distinct uses.
+                // To filter records based on their categorization. Such as WITH DATA CATEGORY.
+                // To query and retrieve record changes tracked in a user profile feed. See Custom Object__Feed in the Object Reference for Salesforce .
+                // To filter records based on user access permissions on fields or objects being queried within Apex code. 
+                // See Filter SOQL Queries Using WITH SECURITY_ENFORCED (Beta) in the Apex Developer Guide
+            // Example
+            // [SELECT lastname FROM Contact WITH SECURITY_ENFORCED]
+            // Security Enforced is in beta, but ensures that the 
+            // running user has the securirty permissions to access 
+            // the object, and field being queried.
+
+        //AGGREGATE
+            // Aggregate functions lets you get back aggregate results from a query.
+            // AVG() returns the average value of a numeric field. 
+            // COUNT() returns the number of matching results. COUNT_DISTINCT() Returns non-null matching results.
+            // MIN(), MAX(). Returns the minimum or maximum value of a numeric field.
+            // SUM() returns the sum of a numeric field.
+
+            //GROUP BY
+                // Group by lets you group records by specific values.
+                // Example
+                // [SELECT Count(lastname), account.name FROM Contact group by account.name]
+                // Groups the aggregate results by account, showing number of contacts per each.
+
+            //HAVING
+                // Having lets you filter the results of an aggregate function.
+                // Example
+                // [SELECT COUNT(lastname), account.name FROM Contact GROUP BY account.name HAVING COUNT(lastname) > 2]
+                // Will return only those accounts that have more than two contacts.
+
+            //DATE FUNCTIONS
+                // Date functions allow you to parse date fields to get specific information. Must be used with aggregates.
+                // Example
+                // [SELECT COUNT_DISTINCT(lastname), CALENDAR_YEAR(createddate) from Contact GROUP BY CALENDAR_YEAR(CreatedDate)]
+                // Returns the number of unique contact last names and the year they were created.
+
+        //FORMAT
+            // Format is used to format number, date, time, and currency fields based on localized settings.
+            // For example, dates in the US are Month, Day, Year. Whereas in europe they would be Day, Month Year.
+            // Example
+            // [SELECT FORMAT(lastmodifieddate) FROM Contact]
+            // Returns the last modified date in the localized format.
+
+        //FOR REFERENCE
+            // For reference is used when you are querying something 
+            // for reference in a custom interface, such as a visualforce page.
+            // This in turn will update the last referenced date accordingly.
+            // Example
+            // [SELECT lastname FROM Contact LIMIT 1 FOR REFERENCE]
+            // The record returned's last referenced date is updated.
+
+        //FOR UPDATE
+            // For update is used to lock a record during the current transaction.
+            // This prevents any other processes from updating the record while it 
+            // is being currently worked with.
+            // Example
+            // [SELECT lastname FROM Contact FOR UPDATE]
+            // Locks the returned records until the transaction completes.
+
+        //RELATIONSHIP QUERIES
+            // Relationship queries return information from related records.
+            // There are limits involved, which can be numerous.
+            // Refer to documentation for the exact limitations. 
+            // https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_relationships_query_limits.htm
+            // Example Child-to-Parent
+            // [SELECT lastname, account.name FROM Contact]
+            // Returns the parent account name along with the contact last name. You can only go up 5 levels in a child to parent relationship query.
+            //
+            // Example parent-to-child
+            // [SELECT name, (SELECT lastname FROM Contacts) FROM account]
+            // Returns the child contacts last name. Note Contacts instead of Contact in the relationship query.
+
+    //Collect all the contacts in the org that do not meet the data completeness standards.
+    private List<Contact> contactList = [SELECT lastname, firstname, id, email, phone, OwnerID, account.phone 
+                                         FROM Contact 
+                                         WHERE email = null OR phone = null];
+    
+    // Check for data completeness and update or create tasks as needed.
+    public void dataCompletenessCheck() {
+        List<Contact> updateList = new List<Contact>();
+        List<Task> insertTaskList = new List<Task>();
+        for(Contact c: contactList) {
+            if(c.email == null && c.phone == null) {
+                Contact cUpdate = setDefaultPhone(c);
+                Task newTask = new Task();
+                newTask.subject = 'Aquire Email Address for Contact';
+                newTask.OwnerId = c.OwnerId;
+                newTask.WhoId = c.Id;
+                updateList.Add(cUpdate);
+                insertTaskList.add(newTask);
+            } else if(c.phone == null) {
+                Contact cUpdate = setDefaultPhone(c);
+                updateList.Add(cUpdate);
+            }
+        }
+        insert insertTaskList;
+        database.update(updateList);
+    }
+    
+    // Set the default phone value
+    private contact setDefaultPhone(Contact c) {
+        if(c.account.phone != null && c.phone == null) {
+            c.phone = c.account.phone;
+        }
+        return c;
+    }
+    
+    // Show the results in the debug log.
+    public void showResults() {
+        system.debug(contactList);
+    }
+
+}
