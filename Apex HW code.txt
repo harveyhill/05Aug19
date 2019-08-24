@@ -80,4 +80,42 @@ public class ApexPOExercises {
         return temp.isEmpty();
     }
     
+    //ApexPOExercises.updateAccountSize();
+    public static void updateAccountSize( ) {
+        List<Account>accountList = [select Name, NumberofEmployees, Size__c from Account where NumberofEmployees != null];
+        for(Account a: accountList){
+            if(a.NumberOfEmployees > 0 && a.NumberOfEmployees <= 1000){
+                a.Size__c = 'small';
+            }else if(a.NumberOfEmployees > 1000 && a.NumberOfEmployees <= 10000){
+                a.Size__c = 'medium';
+            }else if(a.NumberOfEmployees > 10000){
+                a.Size__c = 'large';
+            }
+        }
+        database.update(accountList);
+	}
+    
+    //ApexPOExercises.updateCALeads();
+    public static void updateCALeads( ) {
+        List<Lead> leadList = [select name, lead.state, status, description from Lead where state != null];
+        for(Lead l: leadList){
+            if(l.state == 'CA'){
+                l.status = 'Closed - Not Converted';
+                l.description = 'We are no longer doing business in California.';
+            }
+        }
+        database.update(leadList);
+	}
+    
+    //ApexPOExercises.closePastDueOpportunities();
+    public static void closePastDueOpportunities( ) {
+        List<Opportunity>opportunityList = [select Name, CloseDate, StageName from Opportunity];
+        for(Opportunity o: opportunityList){
+            if(o.CloseDate < system.today() && o.StageName != 'Closed Won'){
+                o.StageName = 'Closed Lost';
+            }
+        }
+        database.update(opportunityList);
+	}    
+    
 }
