@@ -1,0 +1,168 @@
+public class ApexP0Exercises {
+
+    
+//////////////////////////////////////////////////
+//
+//    Apex Homework 0
+//    Created on: 8/21
+//    Due on: 8/26
+//    Created by: Ying Ma
+//    Description: First Apex homework, programming basics
+//    
+//////////////////////////////////////////////////
+
+                        
+//Problem 1
+public static Integer nFibonacci( Integer n ){
+    
+    if(n==0){
+        return 0;
+    }
+    if(n==1){
+        return 1;
+    }
+    return nFibonacci(n-1)+nFibonacci(n-2);
+    
+}
+   
+    
+//Problem 2
+public static Integer[] sortArray( Integer[] intList ) {
+    
+    Integer i, j, key;
+    for(i=1; i<intList.size();i++){
+    	key = intList[i];
+        j=i-1;
+        
+        while((j>=0)&&(intList[j]>key) ){
+            intList[j+1]=intList[j];
+            j--;
+        }
+        intList[j+1]=key;
+    }
+    
+    return intList;
+}    
+    
+    
+//Problem 3
+public static Integer nFactorial( Integer n) {
+    if (n == 0){
+        return 1;
+    }
+    
+    if (n==1){
+        return 1;
+    }
+    
+    return n*nFactorial(n-1);
+
+}    
+    
+
+//Problem 4
+
+public static Integer[] rotateLeftNTimes( Integer[] arrays, Integer n) {
+    while(n>0){
+        integer i = arrays.remove(0);
+        arrays.add(i);
+        n--;
+    }
+    
+	return arrays;
+}    
+    
+//Problem 5
+
+    public static Boolean isPair(string a, string b){
+        if (a == '(' && b == ')') 
+         return true; 
+       else if (a == '{' && b == '}') 
+         return true; 
+       else if (a == '[' && b == ']') 
+         return true; 
+       else
+         return false; 
+    }    
+    
+public static Boolean bracketsAreBalanced( String s ) {
+    string[] Stacks= new string[] {'placeholder'};
+
+        
+        for(string x:s.split('')){
+            if(x != '[' && x != ']' && x != '(' && x != ')' &&x != '{' && x != '}'){
+                continue;
+            }
+            if(Stacks.size()==0){
+                Stacks.add(x);  
+                continue;
+            }            if(isPair(Stacks[Stacks.size()-1],x)){	
+                Stacks.remove(Stacks.size()-1);
+            }else{
+                Stacks.add(x);
+            }
+  
+        }
+    system.debug(Stacks.size());
+    system.debug(Stacks);
+    if (Stacks.size()==1){
+        return True;
+    }else{
+        return False;
+    
+}
+}    
+
+    
+    
+    
+//Problem 6
+public static void updateAccountSize() {
+    list<Account> accounts=[SELECT NumberOfEmployees, Size__c
+FROM Account];
+    for(Account x:accounts){
+        if (x.NumberofEmployees >0  && x.NumberofEmployees<=1000){
+            x.Size__c='small';
+        }else if(x.NumberofEmployees >1000  && x.NumberofEmployees<=10000){
+            x.Size__c='medium';
+        }else if(x.NumberofEmployees >10000){
+            x.Size__c='large';}
+    }
+    
+    database.update(accounts);
+    
+}
+    
+    
+    
+    
+//Problem 7
+public static void updateCALeads() {
+    list<Lead> leads =[SELECT State, Status, Description
+FROM Lead
+WHERE State = 'CA'];
+    for(Lead x:leads){
+        x.Description = 'We are no longer doing business in California.';
+        x.status = 'Closed - Not Converted';
+    }
+    database.update(leads);
+
+}
+    
+    
+    
+//Problem 8
+public static void closePastDueOpportunities() {
+    list<Opportunity> opp = [SELECT Name
+FROM Opportunity
+WHERE CloseDate<today AND StageName != 'Closed Won'];
+    
+    for(Opportunity x:opp){
+        x.stageName='Closed Lost';
+    }
+    
+    database.update(opp);
+}    
+    
+    
+}
