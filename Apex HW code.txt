@@ -9,7 +9,7 @@ public class ApexPOExercises {
     }
     
     //integer[] a = new integer[]{2,4,5,1,3,1};
-	//system.debug(ApexPOExercises.sortArray(a));
+    //system.debug(ApexPOExercises.sortArray(a));
     public static Integer[] sortArray( Integer[] intList ) {
         //integer[] intArray = new integer[]{2,5,3,1} ; 
         integer temp;
