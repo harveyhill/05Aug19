@@ -35,8 +35,8 @@ public class ApexPOExercises {
         return factorial;
     }
 	
-	//integer[] a = new integer[] {1,2,3,4,5};
-	//system.debug(ApexPOExercises.rotateLeftNTimes(a,6));    
+    //integer[] a = new integer[] {1,2,3,4,5};
+    //system.debug(ApexPOExercises.rotateLeftNTimes(a,6));    
     public static integer[] rotateLeftNTimes(integer[] intArray, integer n){
         integer temp;
         for(integer i = 0; i < n; i++){
@@ -50,7 +50,7 @@ public class ApexPOExercises {
     }
     
     //ring s = '()()';
-	//stem.debug(ApexPOExercises.bracketsAreBalanced(s));	
+    //stem.debug(ApexPOExercises.bracketsAreBalanced(s));	
     public static Boolean bracketsAreBalanced( String s ) {
         List <String> newS = s.split('');
         List <String> temp = new List<String>(); 
