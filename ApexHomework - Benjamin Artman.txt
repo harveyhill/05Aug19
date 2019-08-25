@@ -98,16 +98,16 @@ public class ApexP0Exercises {
      * A bracket is any one of the following: (, ), {, }, [, or ]
      * 
      * The following are balanced brackets:
-     *    ( )
-     *    ( ) ( )
-     *    ( ( ) )
-     *    ( { [ ] } )
+     * Â Â Â ( )
+     * Â Â Â ( ) ( )
+     * Â Â Â ( ( ) )
+     * Â Â Â ( { [ ] } )
      *
      * The following are NOT balanced brackets:
-     *   (
-     *   )
-     *   ( ( )
-     *   ( [ ) ]
+     * Â Â (
+     * Â Â )
+     * Â Â ( ( )
+     * Â Â ( [ ) ]
      *
      * Return true if balanced
      * Return false if not balanced
@@ -151,16 +151,10 @@ public class ApexP0Exercises {
                 } else {
                     return false;
                 }
-            } else if(s.substring(i, i+1).contains('(')) {
-                stack += '(';
+            } else if(s.substring(i, i+1).containsany('({[')) {
+                stack += s.substring(i, i+1);
                 head++;
-            } else if(s.substring(i, i+1).contains('{')) {
-                stack += '{';
-                head++;
-            } else if(s.substring(i, i+1).contains('[')) {
-                stack += '[';
-                head++;
-            }
+            } 
         }
         if (head == -1){
             Return true;
