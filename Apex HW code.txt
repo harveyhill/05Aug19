@@ -96,26 +96,24 @@ public class ApexPOExercises {
 	}
     
     //ApexPOExercises.updateCALeads();
+    //select name, state, status, description from Lead where state != null
     public static void updateCALeads( ) {
-        List<Lead> leadList = [select name, lead.state, status, description from Lead where state != null];
+        List<Lead> leadList = [select name, state, status, description from Lead where state = 'CA'];
         for(Lead l: leadList){
-            if(l.state == 'CA'){
-                l.status = 'Closed - Not Converted';
-                l.description = 'We are no longer doing business in California.';
-            }
+            l.status = 'Closed - Not Converted';
+            l.description = 'We are no longer doing business in California.';
         }
         database.update(leadList);
 	}
     
     //ApexPOExercises.closePastDueOpportunities();
+    //select Name, CloseDate, StageName from Opportunity
     public static void closePastDueOpportunities( ) {
-        List<Opportunity>opportunityList = [select Name, CloseDate, StageName from Opportunity];
+        List<Opportunity>opportunityList = [select Name, CloseDate, StageName from Opportunity where (CloseDate < today AND  StageName != 'Closed Won')];
         for(Opportunity o: opportunityList){
-            if(o.CloseDate < system.today() && o.StageName != 'Closed Won'){
-                o.StageName = 'Closed Lost';
-            }
+            o.StageName = 'Closed Lost';
         }
         database.update(opportunityList);
-	}    
+	}
     
 }
