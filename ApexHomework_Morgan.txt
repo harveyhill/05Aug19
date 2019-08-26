@@ -97,16 +97,16 @@ public class ApexP0Exercises {
  * A bracket is any one of the following: (, ), {, }, [, or ]
  * 
  * The following are balanced brackets:
- *    ( )
- *    ( ) ( )
- *    ( ( ) )
- *    ( { [ ] } )
+ *    ( )
+ *    ( ) ( )
+ *    ( ( ) )
+ *    ( { [ ] } )
  *
  * The following are NOT balanced brackets:
- *   (
- *   )
- *   ( ( )
- *   ( [ ) ]
+ *   (
+ *   )
+ *   ( ( )
+ *   ( [ ) ]
  *
  * Return true if balanced
  * Return false if not balanced
