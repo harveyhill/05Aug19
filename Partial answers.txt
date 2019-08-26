@@ -1,0 +1,133 @@
+public class ApexP0Exercises {
+    
+    public ApexP0Exercises() {
+    }
+
+
+
+    public static Integer nFibonacci( Integer n ) {
+        String results = '0';
+        Integer higher = 0, holder = 0, lower = 1;
+        for(Integer count = 1; count < n+1; count++) {
+            holder = higher;
+            higher += lower;
+            lower = holder;
+        }
+        return higher;
+    }
+
+	public static Integer[] sortArray( Integer[] intList ) {
+        Integer holder = 0;
+        for(Integer place = 0; place < intList.size(); place++) {
+            for(Integer checking = place + 1; checking < intList.size(); checking++) {
+                if(intList[checking] < intList[place]) {
+                    holder = intList[place];
+                    intList[place] = intList[checking];
+                    intList[checking] = holder;
+                }
+            }
+        }
+        return intList;
+	}
+
+	public static Integer nFactorial( Integer n) {
+		Integer fact = 1;
+        for(Integer count = 1; count < n+1; count++) {
+            fact *= count; 
+        }
+        return fact;
+	}
+    
+    public static Integer[] rotateLeftNTimes( Integer[] array, Integer n) {
+        Integer[] arrayTemp = array.clone();
+        system.debug(array);
+        if (n > 0) {
+            Integer temp = array[0];
+            system.debug(array.size());
+            for (Integer step = 1; step < array.size(); step++) {
+                arrayTemp[step-1] = array[step];
+            }
+            arrayTemp[array.size()-1] = temp;
+            n--;
+            rotateLeftNTimes( arrayTemp, n);
+                
+        }
+        system.debug(arrayTemp);
+        return arrayTemp;
+        
+    }
+    
+    public static Boolean bracketsAreBalanced( String s ) {
+        Boolean benefit = TRUE;
+        String inSet = '({[';
+        String outSet = ')}]';
+        String scratchPad = '';
+        
+        for(Integer scan = 0; scan < s.length(); scan++) {
+            String buffer = s.substring(scan, scan+1);
+            
+            if(inSet.contains(buffer)) {
+                system.debug('Inset contains buffer');
+                scratchPad += buffer;
+                system.debug(scratchPad);
+            } 
+            else if(outSet.contains(buffer)) {
+                String bob = scratchPad.right(1);
+                Integer george = scratchPad.indexOf(bob);
+                if(outSet.indexOf(buffer) == inSet.indexOf(scratchPad.right(1))) {
+                    scratchPad.removeEnd(buffer);
+                } else {
+                    system.debug('false');
+                    return false;
+               }
+                 
+            } system.debug(buffer);system.debug(scratchPad);
+            }
+            If(scratchPad.length() > 0) {
+                system.debug('false');
+                return false;
+        	}
+	    system.debug(scratchPad.length());
+	    system.debug('true');
+        return true;
+    }
+    
+    public static void updateAccountSize() {
+        List<Account> accounts = [SELECT Id, Size__c, NumberOfEmployees FROM Account];
+        
+        for(Account subject: accounts) {
+            if (subject.NumberOfEmployees < 1000) subject.Size__c = 'small';
+            else if (subject.NumberOfEmployees < 10000) subject.Size__c = 'medium';
+            else subject.Size__c = 'large';
+            
+            update subject; 
+		}
+    }
+
+/*    public static void updateCALeads() {
+        List<Lead> leads = [select Id, Address, Status from Lead WHERE Address='%ca%'];
+        
+        for(Lead subject: leads) {
+            system.debug(subject.Address);
+
+            String addr = (String) subject.Address;
+            if(addr.containsIgnoreCase('ca')) {
+                subject.Status = 'Closed - Not Converted';
+                update subject;
+            }
+        }
+    } 
+*/   
+    public static void closePastDueOpportunities() {
+        Date now = date.today();
+       	List<Opportunity> oldOpps = [SELECT Id, CloseDate, StageName FROM Opportunity WHERE CloseDate < date.today() AND StageName != 'Closed Won'];
+        
+        for(Opportunity subject : oldOpps) {
+        system.debug(subject0);
+//        update subject;
+        }
+        
+        
+    }
+    
+}
