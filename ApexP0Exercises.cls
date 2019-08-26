@@ -101,38 +101,71 @@ public with sharing class ApexP0Exercises {
         j=0;
         return passedArray;
     }
-        
     
     public static Boolean bracketsAreBalanced(String s){
-
-		List<String> allChars = new List<String>();
-        Integer bracketBalance = 0;
-        for(Integer i = 0; i < s.length(); i++){
-            
-            allChars.add(i, s.substring(i, i));
+        
+   		Integer StackCounter = -1;
+        String stack = '';
+        for(Integer i=0; i<s.length();i++)
+        {
+            String currChar = s.substring(i,i+1);
+            if(currChar.contains(')'))
+            {
+                if(stack.endswith('('))
+                {
+                    stackCounter--;
+                    stack.remove('(');
+                } else
+                {
+                    break;
+                }
+            	   
+            }
+            else if(currChar.contains(']'))
+            {
+                if(stack.endswith('['))
+                {
+                    stackCounter--;
+                    stack.remove('[');
+                } else
+                {
+                    break;
+                }
+                
+            }
+            else if(currChar.contains('}'))
+            {
+                if(stack.endswith('{'))
+                {
+                    stackCounter--;
+                    stack.remove('{');
+                } else
+                {
+                    break;
+                }
+                
+            }
+            else if(currChar.containsAny('({['))
+            {
+                stackCounter++;
+                stack+=currChar;
+                
+                
+            }
             
         }
         
-        for(String c: allChars){
-            
-            Switch on c{
-                when '(', '{', '['{
-                    bracketBalance++;
-                    
-                }
-                when ']', ')', '}' {
-                    bracketBalance--;
-                                     
-                }
-            }               
-        }
+        if(stackCounter== -1)
+        {
+            return true;
+        } else {return false;}
         
-        if(bracketBalance == 0)
-        {return true;}
-        else
-        {return false;}
-
     }
+    
+        
+  
+    
+    
     
     public static void updateAccountSize(){
         
