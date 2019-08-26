@@ -49,8 +49,8 @@ public class ApexP0Exercises {
         return intArray;
     }
     
-    //ring s = '()()';
-    //stem.debug(ApexP0Exercises.bracketsAreBalanced(s));	
+    //String s = '()()';
+    //system.debug(ApexP0Exercises.bracketsAreBalanced(s));	
     public static Boolean bracketsAreBalanced( String s ) {
         List <String> newS = s.split('');
         List <String> temp = new List<String>(); 
