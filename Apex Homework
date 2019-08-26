@@ -1,0 +1,310 @@
+ /////////////////////////////////////////////////////
+    //
+    //  Name: ApexP0Exercises
+    //  Author: Mohammed Hossain
+    //  Created: 8/21/19
+    //  Updated: 8/25/19
+    //  Description: Apex coding homework
+    //  
+    //
+    ///////////////////////////////////////////////////
+public class ApexP0Exercises { 
+
+    /*
+ * 1. Return the nth Fibonacci number
+ * Test Cases:
+ * Input: 0     Output: 0
+ * Input: 1    Output: 1
+ * Input: 2     Output: 1
+ * Input: 10    Output: 55
+*/
+public static Integer nFibonacci( Integer n ){
+        if (n <= 1) 
+       		return n; 
+    	return nFibonacci(n-1) + nFibonacci(n-2);
+
+	}
+    
+ /*
+ * 2. Sort an array of integers.
+ * Test Cases:
+ * Input: [2,4,5,1,3,1]     Output: [1,1,2,3,4,5]
+ * Input: [5,4,3,2,1]     Output: [1,2,3,4,5]
+ *
+ * Don't use the sort() method... that would be lame.
+*/
+public static Integer[] sortArray( Integer[] intList ) {
+    
+    integer[] sortedIntList;
+    integer num = 0;
+    integer arraySize = intlist.size();
+    
+    for(integer i = 0; i < arraySize; i++){
+        
+        for(integer j = i+ 1; j < arraySize; j++){
+            
+            if(intList[i] > intList[j]){
+                num= intList[j];
+                intList[j] = intList[i];
+                intList[i] = num;
+            }
+        }
+    }
+    
+	return intList;
+
+}
+
+ /* 3. Return the factorial of n.
+ * Test Cases:
+ * Input: 0    Output: 1
+ * Input: 1    Output: 1
+ * Input: 3    Output: 6
+*/
+public static Integer nFactorial( Integer n) {
+        if (n == 0) 
+       		return 1;
+    
+    	return n*nFactorial(n-1);
+
+
+}
+
+/*
+ * 4. Rotate left
+ * Given an array, array, and an integer, n, rotate the values in array left n times and return array
+ * Test Cases:
+ * Input: [1,2,3,4,5], 1    Output: [2,3,4,5,1]
+ * Input: [1,2,3,4,5], 6    Output: [2,3,4,5,1]
+ * Input: [1,2,3,4,5], 3    Output: [4,5,1,2,3]
+*/
+public static Integer[] rotateLeftNTimes( Integer[] array1, Integer n) {
+    integer num= 0;
+        
+    for (integer i = 0; i<n; i++)
+    {
+        num = array1[0];
+        for(integer j = 1; j < array1.size(); j++)
+        {
+            array1[j-1] = array1[j]; 
+        }
+        
+        array1[(array1.size()-1)]= num;
+    }
+	return array1;
+}
+    
+/*
+ * 5. Balanced Brackets
+ * A bracket is any one of the following: (, ), {, }, [, or ]
+ * 
+ * The following are balanced brackets:
+ *    ( )
+ *    ( ) ( )
+ *    ( ( ) )
+ *    ( { [ ] } )
+ *
+ * The following are NOT balanced brackets:
+ *   (
+ *   )
+ *   ( ( )
+ *   ( [ ) ]
+ *
+ * Return true if balanced
+ * Return false if not balanced
+*/
+    
+ public static Boolean openOrClosed( String s )
+ {
+    String openBrackets = '[,{,(,';
+     
+     if(openBrackets.contains(s))
+         return True;
+     else
+         return False;
+ }
+
+public static Boolean bracketsAreBalanced( String s ) {
+
+    String openBrackets = '[,{,(,';
+    String closedBrackets = '],},)';
+    String currentChar;
+    String oppositeChar;
+    integer index;
+
+	if(math.mod(s.length(), 2) == 1)
+    {
+        return false;
+    }
+    //system.debug(openBrackets.countMatches('['));
+    //system.debug(s.length());
+    
+        //loop for strings
+    for (integer i =0; i < s.length();i++ )
+    {
+        currentChar= s.substring(i, i+1);
+        /*system.debug(currentChar.getChars()+ ' '+ currentChar);
+        system.debug(currentChar+ ' '+ s.countMatches(currentChar));
+        if(openOrclosed(currentChar))
+            system.debug('Open');
+        else
+            system.debug('Closed');
+        
+        if(s.countMatches(currentChar) == s.countMatches(currentChar)+1||s.countMatches(currentChar) == s.countMatches(currentChar)+2||s.countMatches(currentChar) == s.countMatches(currentChar)-1||s.countMatches(currentChar) == s.countMatches(currentChar)-2)
+        {
+            system.debug(s.countMatches(currentChar));
+        }*/
+        
+        if(openOrclosed(currentChar))
+        {
+            for(integer j=0; j < openBrackets.length(); j++)
+            {
+                if(currentChar == openBrackets.substring(j, j+1))
+                {
+                    oppositeChar = closedBrackets.substring(j, j+1);
+                    //index = j;
+                }
+                    
+            }
+            //creates new substring
+            //currentChar = s.substring(i,s.indexOf(oppositeChar.getChars(), i));
+            //calls 
+            
+        }
+        else
+        {
+            for(integer j=0; j < closedBrackets.length(); j++)
+            {
+                if(currentChar == closedBrackets.substring(j, j+1))
+                {
+                    oppositeChar = openBrackets.substring(j, j+1);
+                    index = j;
+                }
+                    
+            }
+		          
+        }
+        
+        if(s.countMatches(currentChar) == s.countMatches(oppositeChar))
+           system.debug(s.countMatches(currentChar) + ' = '+ s.countMatches(oppositeChar));
+        else{
+            
+        	system.debug(currentChar+ ':'+s.countMatches(currentChar) + ' != '+oppositeChar+':'+ s.countMatches(oppositeChar));
+            return false;
+        }
+    }
+    
+
+    return True;
+
+}
+    
+/*
+ * 6. Create a method that retrieves a list of all accounts and updates those accounts.
+ *      Create a custom field on the Account standard object called Size__c that will be a 
+ * picklist containing small/medium/large.
+ *     Create a method that retrieves a list of all accounts. 
+ *         - If an account has between 1-1000 employees then it is classified as small.
+ *         - If an account has between 1001-10000 employees it is classified as medium.
+*         - If an account has more than 10000 employees it is classified as large.
+ *     Update the Size__c field on each account to reflect the amount of employees in the Account.
+*/
+public static void updateAccountSize( ) {
+
+    List<Account> accountList = [SELECT NumberOfEmployees, Size__c, id, Name, AccountNumber 
+                                         FROM Account
+                                         WHERE NumberOfEmployees != null];
+    List<Account> accountUpdateList = NEW List<Account>();
+    
+    Account updateSize;
+    
+    for(Account a: accountList)
+    {
+        updateSize = a;
+        
+        if(a.NumberOfEmployees >= 1 && a.NumberOfEmployees <= 1000)
+        {
+            updateSize.Size__c = 'small';
+        }
+        else if(a.NumberOfEmployees > 1000 && a.NumberOfEmployees <= 10000)
+        {
+            updateSize.Size__c = 'medium';
+        }
+        else
+        {
+            updateSize.Size__c = 'large';
+        }
+        
+        accountUpdateList.Add(updateSize);
+    }
+    
+    database.update(accountUpdateList);
+    
+}
+    
+/* 
+ * 7. Create a method that will find all leads that contain 'ca' in their fields. 
+ *     If a lead is located in California(CA), change their Lead Status field to 'Closed - Not 
+ * Converted' and their description should display the message, "We are no longer doing 
+ * business in California."
+ */
+public static void updateCALeads( ) {
+    
+    List<Lead> LeadList = [SELECT id, Address, Company, Status, Description
+                                         FROM Lead];
+    
+    
+    List<Lead> leadUpdateList = NEW List<Lead>();
+    
+	
+	for(Lead leads : LeadList)
+    {
+        Address leadAddress = leads.Address;
+        Lead updateLead = leads;
+        
+        //system.debug('state: '+leadAddress.state);
+        //system.debug('stateCode: '+leadAddress.statecode);
+        if(leadAddress.state == 'CA')
+        {
+            updateLead.Description = 'We are no longer doing business in California.';
+            updateLead.Status = 'Closed - Not Converted';
+            leadUpdateList.Add(updateLead);
+        }
+        
+        
+        
+    }
+    
+    database.update(leadUpdateList);
+}
+/*
+ * 8. Create a method that will find all Opportunities which have already passed their Close Date 
+ * and have a Stage field that is not 'Closed Won'. Since they have passed their Close Date and 
+ * they are not marked as 'Closed Won', they should be marked as 'Closed Lost'.
+ */
+public static void closePastDueOpportunities( ) {
+    
+    List<Opportunity> opportunityList = [SELECT id, AccountId, CloseDate, StageName
+                                         FROM Opportunity
+                                         WHERE StageName != 'Closed Won'];
+    
+    
+    List<Opportunity> opportunityUpdateList = NEW List<Opportunity>();
+    
+	
+	for(Opportunity opp : OpportunityList)
+    {
+        if(opp.CloseDate < Date.today())
+        {
+            opp.StageName = 'Closed Lost';
+            opportunityUpdateList.Add(opp);
+        }
+            
+    }
+    
+    database.update(opportunityUpdateList);
+
+}    
+    
+    
+}
