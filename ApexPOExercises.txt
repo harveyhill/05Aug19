@@ -1,6 +1,6 @@
-public class ApexPOExercises {
+public class ApexP0Exercises {
 	
-    //system.debug(ApexPOExercises.nFibonacci(10));
+    //system.debug(ApexP0Exercises.nFibonacci(10));
     public static Integer nFibonacci( Integer n ){
         if(n <= 1){
             return n;
@@ -9,7 +9,7 @@ public class ApexPOExercises {
     }
     
     //integer[] a = new integer[]{2,4,5,1,3,1};
-    //system.debug(ApexPOExercises.sortArray(a));
+    //system.debug(ApexP0Exercises.sortArray(a));
     public static Integer[] sortArray( Integer[] intList ) {
         //integer[] intArray = new integer[]{2,5,3,1} ; 
         integer temp;
@@ -25,7 +25,7 @@ public class ApexPOExercises {
         return intList;
     }
     
-    //system.debug(ApexPOExercises.nFactorial(3));
+    //system.debug(ApexP0Exercises.nFactorial(3));
     public static Integer nFactorial( Integer n) {
         integer factorial = 1;
         for(integer i = 1; i <= n; i++){
@@ -36,7 +36,7 @@ public class ApexPOExercises {
     }
 	
     //integer[] a = new integer[] {1,2,3,4,5};
-    //system.debug(ApexPOExercises.rotateLeftNTimes(a,6));    
+    //system.debug(ApexP0Exercises.rotateLeftNTimes(a,6));    
     public static integer[] rotateLeftNTimes(integer[] intArray, integer n){
         integer temp;
         for(integer i = 0; i < n; i++){
@@ -50,7 +50,7 @@ public class ApexPOExercises {
     }
     
     //ring s = '()()';
-    //stem.debug(ApexPOExercises.bracketsAreBalanced(s));	
+    //stem.debug(ApexP0Exercises.bracketsAreBalanced(s));	
     public static Boolean bracketsAreBalanced( String s ) {
         List <String> newS = s.split('');
         List <String> temp = new List<String>(); 
@@ -80,7 +80,7 @@ public class ApexPOExercises {
         return temp.isEmpty();
     }
     
-    //ApexPOExercises.updateAccountSize();
+    //ApexP0Exercises.updateAccountSize();
     public static void updateAccountSize( ) {
         List<Account>accountList = [select Name, NumberofEmployees, Size__c from Account where NumberofEmployees != null];
         for(Account a: accountList){
@@ -95,7 +95,7 @@ public class ApexPOExercises {
         database.update(accountList);
 	}
     
-    //ApexPOExercises.updateCALeads();
+    //ApexP0Exercises.updateCALeads();
     //select name, state, status, description from Lead where state != null
     public static void updateCALeads( ) {
         List<Lead> leadList = [select name, state, status, description from Lead where state = 'CA'];
@@ -106,7 +106,7 @@ public class ApexPOExercises {
         database.update(leadList);
 	}
     
-    //ApexPOExercises.closePastDueOpportunities();
+    //ApexP0Exercises.closePastDueOpportunities();
     //select Name, CloseDate, StageName from Opportunity
     public static void closePastDueOpportunities( ) {
         List<Opportunity>opportunityList = [select Name, CloseDate, StageName from Opportunity where (CloseDate < today AND  StageName != 'Closed Won')];
