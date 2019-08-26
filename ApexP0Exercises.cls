@@ -10,19 +10,22 @@
 ///////////////////////////////////////////////////////////////////
 
 public with sharing class ApexP0Exercises {
-    public ApexP0Exericises() {
+    public ApexP0Exercises() {
 
     }
     //Exercise 1: Make a fibonacci calculator
     //      I'm taking a recursive approach, since the fibonacci sequence is usually defined recursively
-    public static Int nfibonacci( Integer n){
+    public static Integer nfibonacci( Integer n){
 
-        if(n = 0)
-        return 0;
-        else if(n=1)
-        return 1;
-        else
-        return (nfibonacci(n-1) + nfibonacci(n-2));
+        if(n == 0){
+            return 0;
+        }
+        else if(n==1){
+            return 1;
+        }
+        else{
+            return (nfibonacci(n-1) + nfibonacci(n-2));
+        }
     }
 
     //Exercise 2: Sort the array
@@ -31,7 +34,7 @@ public with sharing class ApexP0Exercises {
     //      array sizes larger than like 5.
     public static Integer[] sortArray( Integer[] intList) {
 
-        int i, key, j;
+        Integer i, key, j;
 
 
         //Go through each position in the array
@@ -50,7 +53,7 @@ public with sharing class ApexP0Exercises {
 
             }
             //when all values have been moved up, we can insert the value we were holding onto.
-            inList[j+1]=key;
+            intList[j+1]=key;
         }
         return intList;
     }
@@ -60,49 +63,131 @@ public with sharing class ApexP0Exercises {
     //      so that's the approach I decided to take.
     public static Integer nFactorial(Integer n)
     {
-        if(n=1 || n = 0)
-        return 1;
-        else
-        return n*nFactorial(n-1);
+        if(n==1 || n == 0){
+            return 1;}
+        else{
+            return n*nFactorial(n-1);}
 
     }
 
     //Exercise 4: rotate left n times
     //      I broke this into 3 steps: copy, move, replace.
     //      I don't know what else to say here. 
-    public static Integer[] rotateLeftNTimes(Integer[] array, Integer n) {
+    public static List<Integer> rotateLeftNTimes(List<Integer> passedArray, Integer n) {
         
         //We're beginning by making a tempArray to hold the first n values, so they can be shifted later.
-        Integer[n] tempArray;
+        List<Integer> tempArray = new List<Integer>();
         //fill in the tempArray with the first n values
-        for(int i=0; i<n; i++){
+        for(Integer i=0; i<n; i++){
 
-            tempArray[i]=array[i];
+            tempArray.set((i), passedArray.get(i));
         
         }
         //Scooch all the values to the left n spaces.
-        for(int i=0; i<array.size()-n; i++){
+        for(Integer i=0; i<(passedArray.size()-n); i++){
 
-            array[i]=array[i+n];
+            passedArray.set(i, passedArray.get(i+n));
 
         }
 
         //since I don't wanna do math right now, this is to start the tempArray at 0.
-        int j = 0;
+        Integer j = 0;
         //Now replace the values removed at the end of the array.
-        for(int i=array.size()-n; i<array.size(); i++){
+        for(Integer i=passedArray.size()-n; i<passedArray.size(); i++){
 
-            array[i]=tempArray[j];
+            passedArray.set(i, tempArray.get(j));
             j++;
         }
         j=0;
-        return array;
+        return passedArray;
     }
         
+    
     public static Boolean bracketsAreBalanced(String s){
 
-
+		List<String> allChars = new List<String>();
+        Integer bracketBalance = 0;
+        for(Integer i = 0; i < s.length(); i++){
+            
+            allChars.add(i, s.substring(i, i));
+            
+        }
+        
+        for(String c: allChars){
+            
+            Switch on c{
+                when '(', '{', '['{
+                    bracketBalance++;
+                    
+                }
+                when ']', ')', '}' {
+                    bracketBalance--;
+                                     
+                }
+            }               
+        }
+        
+        if(bracketBalance == 0)
+        {return true;}
+        else
+        {return false;}
 
     }
+    
+    public static void updateAccountSize(){
+        
+        List<Account> allAccounts = [SELECT NumberOfEmployees, Size__c FROM Account];
+        for(Account a: allAccounts){
+            
+            if(a.NumberOfEmployees <= 1000){
+                a.Size__c = 'Small';
+                
+            } else if(a.NumberOfEmployees>1000 && a.NumberOfEmployees <=10000){
+                
+             a.Size__c = 'Medium';
+                
+            } else {
+                a.Size__c = 'Large';
+                
+            }
+        }
+        update allAccounts;
+    }
+    
+    public static void updateCALeads(){
+        
+        List<Lead> allLeads = new List<Lead>();
+        allLeads = [SELECT Status, Address, Description FROM Lead];
+        for(Lead l: allLeads){
+            if(l.address != null){
+            Address location = l.Address;
+            
+            if(location.getStateCode() == 'CA')
+            {
+                l.Status = 'Closed -Not Converted';
+                l.Description = 'We are no longer doing business in California.';
+                
+            }  
+        }
+        }
+        update allLeads;
+        
+    }
+    
+    public static void closePastDueOpportunities(){
+        
+        Date checkAgainstThis = Date.today();
+        
+        List<Opportunity> allOpportunities = new List<Opportunity>();
+        allOpportunities = [SELECT CloseDate, StageName FROM Opportunity WHERE CloseDate < :checkAgainstThis AND StageName != 'Closed Won'];
+        
+        for(Opportunity o: allOpportunities){
+            
+            o.StageName = 'Closed Lost';
+            
+        }
+        update allOpportunities;
+    }
+    
+    
 }
-
