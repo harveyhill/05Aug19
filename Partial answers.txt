@@ -4,7 +4,7 @@ public class ApexP0Exercises {
     }
 
 
-
+/*
     public static Integer nFibonacci( Integer n ) {
         String results = '0';
         Integer higher = 0, holder = 0, lower = 1;
@@ -117,17 +117,15 @@ public class ApexP0Exercises {
             }
         }
     } 
-*/   
-    public static void closePastDueOpportunities() {
+*/
+      public static void closePastDueOpportunities() {
         Date now = date.today();
-       	List<Opportunity> oldOpps = [SELECT Id, CloseDate, StageName FROM Opportunity WHERE CloseDate < date.today() AND StageName != 'Closed Won'];
-        
+       	List<Opportunity> oldOpps = [SELECT Id, CloseDate, StageName FROM Opportunity WHERE StageName != 'Closed Won' AND  CloseDate < TODAY];
+
         for(Opportunity subject : oldOpps) {
-        system.debug(subject0);
-//        update subject;
+            subject.StageName = 'Closed Lost';
+	        update subject;
         }
-        
-        
     }
     
 }
