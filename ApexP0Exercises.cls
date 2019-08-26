@@ -99,8 +99,11 @@ public class ApexP0Exercises {
  * Return false if not balanced
 */
 	public static Boolean bracketsAreBalanced( String s ) {
-        Boolean isTrue = False;
+        Boolean t = True;
         String temp = '';
+        /*s = s.trim();
+        s = s.replaceAll(' ', '');
+        system.debug(s);*/
         for(Integer i=0;i<s.length();i++) {
             if(s.substring(i,i+1).contains('}')) {
                 if(!String.isEmpty(temp)) {
@@ -110,7 +113,7 @@ public class ApexP0Exercises {
                    		return False;
                 	}
                 } else {
-                    return False;
+                   return False;
                 }
             } else if(s.substring(i,i+1).contains(')')) {
                 if(!String.isEmpty(temp)) {
@@ -133,16 +136,16 @@ public class ApexP0Exercises {
                 	}
                 }
             } else {
-            	temp = temp + s.substring(i, i+1);
+                if(s.substring(i,i+1).contains('{') || s.substring(i,i+1).contains('(') || s.substring(i,i+1).contains('[')) {
+                    temp = temp + s.substring(i, i+1);
+                }
             }
         }
         if(String.isEmpty(temp)) {
-            //system.debug(temp);
             return True;
         } else {
-            //system.debug(temp);
             return False;
-        }
+	}
 	}
     
     /* You should NOT be submitting answers that you find online. You will be expected to be able to defend any of these solutions without notice. */
