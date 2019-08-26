@@ -94,7 +94,70 @@ public class ApexP0Exercises{
         }
         return true;
     }
-    
+
+    // Update Account Size
+    // based on number of employees it will update the Size__c field
+    public static void updateAccountSize(){
+        List<Account> getAccounts = [SELECT name, NumberOfEmployees, Size__c FROM Account];
+        List<Account> updatedList = new List<Account>();
+        Account newA;
+
+        for(Account a: getAccounts){
+            newA = a;
+            if (a.NumberOfEmployees <= 1000){
+                a.Size__c = 'small';
+            }else if(a.NumberOfEmployees >= 1001 && a.NumberOfEmployees <= 10000){
+                a.Size__c = 'medium';       
+            }else{
+                a.Size__c='large';
+            }
+            updatedList.add(newA);
+        }
+        	database.update(updatedList);
+	}
+
+    /* Will find all leads that contain 'ca' in their fields. 
+    * If a lead is located in California(CA), change their Lead Status field to 'Closed - Not 
+    * Converted' and their description should display the message, "We are no longer doing 
+    * business in California."
+    */
+    // Update CA Leads
+    public static void updateCALeads(){
+        List<Lead> getLeads = [SELECT id, Address, Status, Description FROM Lead];
+        List<Lead> dbUpdate = new List<Lead>();
+
+        for(Lead lead : getLeads){
+            Address leadAddress = lead.Address;
+
+            // To hold this specific lead
+            Lead forUpdate = lead;
+
+            if(leadAddress.state == 'CA'){
+                forUpdate.Description = 'We are no longer doing business in California.';
+                forUpdate.Status = 'Closed - Not Converted';
+                dbUpdate.add(forUpdate);
+            }
+        }
+        database.update(dbUpdate);
+    }
+
+    /*Create a method that will find all Opportunities which have already passed their Close Date 
+    * and have a Stage field that is not 'Closed Won'. Since they have passed their Close Date and 
+    * they are not marked as 'Closed Won', they should be marked as 'Closed Lost'.
+    */
+    // Close Past Due Opportunities
+    public static void closePastDueOpportunities(){
+        List<Opportunity> getOpps = [SELECT stagename, closeDate FROM Opportunity WHERE stagename != 'Closed Won'];
+        List<Opportunity> dbUpdate = new List<Opportunity>();
+
+        for(Opportunity o : getOpps){
+            if(o.closeDate < Date.Today()){
+                o.stagename = 'Closed Lost';
+                dbUpdate.add(o);
+            }
+        }
+        database.update(dbUpdate);
+    } 
     
     public class StackUnderflowException extends Exception {
     /* Custom exception */
@@ -135,5 +198,9 @@ public class ApexP0Exercises{
         return this.items.get(size() - 1);
     }    
 }
-    
+
+    // String p = '([)]';
+    // system.debug(bracketsAreBalanced(p));
+    // system.debug('Hello world, oh yeh its');
+
 }
