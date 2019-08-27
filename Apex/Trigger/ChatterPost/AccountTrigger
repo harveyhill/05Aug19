@@ -1,0 +1,5 @@
+trigger AccountTrigger on Account (after update) {
+    //if(Trigger.isBefore){
+     	accountTriggerHandler.chatterPost(Trigger.Old, Trigger.New);   
+    //}
+}
