@@ -1,0 +1,16 @@
+public class accountTriggerHandler { 
+    public static void chatterPost(List<Account> oldAccount, List<Account> newAccount){
+        List<FeedItem> postList = new List<FeedItem>();
+        FeedItem post = new FeedItem();
+        for(Account accold: oldAccount){
+            for(Account accnew: newAccount){
+                if(accold.ShippingStreet != accnew.ShippingStreet){
+					post.ParentId = accnew.ID;
+					post.Body = 'Old Shipping: \n' + accold.ShippingStreet + '\nNew Shipping: \n' + accnew.ShippingStreet;
+					postList.add(post);
+                }
+            }
+        }
+        insert postList;
+    }
+}
