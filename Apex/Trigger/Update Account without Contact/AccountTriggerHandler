@@ -11,9 +11,9 @@ public class AccountTriggerHandler {
 		for(Account a: accountList){
 			if(a.Contacts.isEmpty()){
 				c.AccountId = a.Id;
-                c.Phone = a.Phone;
-        		c.LastName= 'default';
-                contactList.add(c);
+                		c.Phone = a.Phone;
+        			c.LastName= 'default';
+                		contactList.add(c);
 			}	
 		}
        	database.insert(contactList, false);
