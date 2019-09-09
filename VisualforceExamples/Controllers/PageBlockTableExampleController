@@ -1,0 +1,7 @@
+public class PageBlockTableExampleController {
+    public List<Account> accountList {get;set;}
+    
+    public PageBlockTableExampleController(){
+        accountList = [SELECT Name, Site, Phone, billingstate FROM Account];
+    }
+}
