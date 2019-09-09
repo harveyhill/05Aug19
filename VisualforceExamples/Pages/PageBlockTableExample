@@ -1,0 +1,17 @@
+    
+<apex:page controller="PageBlockTableExampleController">
+    <apex:slds />
+    <apex:form >
+    	<apex:pageBlock >
+        	<apex:pageBlockTable value="{!accountList}" var="acc">
+                <apex:column value="{!acc.name}" />
+                <apex:column value="{!acc.site}" />
+                <apex:column value="{!acc.phone}" />
+                <apex:column value="{!acc.billingstate}" />
+            </apex:pageBlockTable>
+            <apex:dataTable value="{!accountList}" var="acc">
+                <apex:column value="{!acc.name}"/>
+            </apex:dataTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
