@@ -1,0 +1,20 @@
+<apex:page standardController="Account" extensions="VFNewAccountDemoExtension">
+    <apex:pageMessages />
+    <apex:form >
+    	<apex:pageBlock > 
+            <apex:pageBlockButtons >
+            	<apex:commandButton action="{!saveAccountAndContact}" value="Save"/>
+            </apex:pageBlockButtons>
+        	<apex:pageBlockSection title="Account Details">
+            	<apex:inputField value="{!Account.Name}"/>
+                <apex:inputField value="{!Account.Phone}"/>
+                <apex:inputField value="{!Account.Type}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Contact Details">
+            	<apex:inputField value="{!childContact.FirstName}"/>
+                <apex:inputField value="{!childContact.LastName}"/>
+                <apex:inputField value="{!childContact.email}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
