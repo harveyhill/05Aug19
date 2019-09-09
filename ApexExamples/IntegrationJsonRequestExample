@@ -1,0 +1,43 @@
+global class IntegrationJsonRequestExample {
+
+    // 
+    global static HttpResponse makeGetRequest() {
+        Http httpObject = new Http();
+        HttpRequest request = new HttpRequest();
+
+        request.setEndpoint('https://my-json-server.typicode.com/harveyhill/salesforceexamples/posts');
+        request.setMethod('GET');
+
+        HttpResponse response = httpObject.send(request);
+
+        if(response.getStatusCode() == 200){
+            List<Object> responseBody = (List<Object>) JSON.deserializeUntyped(response.getBody());
+            System.debug('Recieved the following: ');
+            for(Object o : responseBody){
+                System.debug(o);
+            }
+        } else {
+            System.debug('The GET request returned a response with status code ' 
+                         + response.getStatusCode());
+        }
+        return response;
+    }
+
+       public static HttpResponse makePutCallout() {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://my-json-server.typicode.com/harveyhill/salesforceexamples/posts');
+        request.setMethod('PUT');
+        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.setBody('{"title":"mighty moose"}');
+        HttpResponse response = http.send(request);
+        // Parse the JSON response
+        if (response.getStatusCode() != 201) {
+            System.debug('The status code returned was not expected: ' +
+                response.getStatusCode() + ' ' + response.getStatus());
+        } else {
+            System.debug(response.getBody());
+        }
+        return response;
+    } 
+}
