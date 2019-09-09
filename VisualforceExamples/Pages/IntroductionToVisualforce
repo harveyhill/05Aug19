@@ -1,0 +1,24 @@
+<apex:page standardController="Account" tabStyle="Contact">
+
+<h1>Congratulations</h1>
+<p>This is your new Visualforce Page, it can contain all your normal HTML and CSS.</p>  
+   <apex:form >
+    <!-- Data Binding -->
+    <apex:pageBlock >
+        <apex:pageBlockSection >
+            <apex:outputText value="{!Account.Name}" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection >
+            <apex:inputText value="{!Account.Name}" />
+        </apex:pageBlockSection>
+        <apex:pageBlockTable value="{!Account.Contacts}" var="con">
+            <apex:column >
+                <apex:outputField value="{!con.Name}" />
+            </apex:column>
+        </apex:pageBlockTable>
+        <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>
