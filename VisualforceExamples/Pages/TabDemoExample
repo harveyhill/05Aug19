@@ -1,0 +1,27 @@
+<apex:page standardController="Account">
+    <apex:form >
+        <apex:tabPanel >
+            <apex:tab label="Account">
+				<apex:pageBlock >
+                	<apex:pageBlockSection >
+                        <apex:outputText value="{!account.name}"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:tab>
+            <apex:tab label="Contact">
+                <apex:pageBlock >
+                	<apex:pageBlockSection >
+                        <apex:repeat value="{!account.contacts}"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:tab>
+            <apex:tab label="Opportunity">
+                <apex:pageBlock >
+                	<apex:pageBlockSection >
+                        <apex:repeat value="{!account.opportunities}"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+            </apex:tab>
+        </apex:tabPanel>
+    </apex:form>
+</apex:page>
