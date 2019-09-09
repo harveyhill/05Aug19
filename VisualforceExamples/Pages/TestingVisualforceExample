@@ -1,0 +1,10 @@
+<apex:page controller="testingVisualforceExampleController">
+    <apex:pageBlock >
+    	<apex:form >
+        	<apex:inputText value="{!lastName}"/>
+            <apex:commandLink action="{!save}" value="Save">
+                <apex:param assignTo="{!param}" name="qp" value="Mr. Ed" />
+            </apex:commandLink>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>
