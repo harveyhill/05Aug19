@@ -1,0 +1,16 @@
+<aura:component controller="LACApexControllerExampleController">
+    <aura:attribute name="cases" type="Id[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds-box">
+    	<div class="slds-text-heading_large">My Open Cases</div>
+        <br/>
+        <lightning:accordion aura:id="accordion" >
+            <aura:iteration items="{!v.cases}" var="case">
+                <lightning:accordionSection label="{!case}">
+                    <c:LACApexControllerItemExample caseId="{!case}" />
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </div>
+</aura:component>
