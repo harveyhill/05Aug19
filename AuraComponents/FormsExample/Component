@@ -1,0 +1,24 @@
+<aura:component controller="LACFormsController">
+    <aura:attribute name="newContact" type="Contact"
+                    default="{ 
+                             'sobjectType':'Contact',
+                             'FirstName': '',
+                             'LastName': ''
+                             }"/>
+    <fieldset class="slds-box slds-theme--default slds-container--small" >
+	<form class="slds-form--stacked">
+    	<lightning:input aura:id="contactform" 
+                         label="First Name"
+                         name="firstName"
+                         value="{!v.newContact.FirstName}"
+                         />
+        <lightning:input aura:id="contactform"
+                         label="Last Name"
+                         name="lastName"
+                         value="{!v.newContact.LastName}"
+                         required="true"
+                         />
+        <lightning:button label="Create Contact" onclick="{!c.createContact}"/>
+    </form>
+    </fieldset>
+</aura:component>
