@@ -1,0 +1,25 @@
+<aura:component >
+    <aura:attribute name="numberOne" type="Integer" default="5" required="true"/>
+    <aura:attribute name="numberTwo" type="Integer" default="5" description="Number two"/>
+    <aura:attribute name="sum" type="Integer" />
+    <aura:attribute name="changedText" type="String" />
+    
+    <!-- This event is fired when an attribute value changes. -->
+    <aura:handler name="change" value="{!v.sum}" action="{!c.sumChanged}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <ui:inputNumber label="Enter a number: " value="{!v.numberOne}" />
+    <ui:inputNumber label="Enter a number: " value="{!v.numberTwo}" />
+    
+    <lightning:input type="number"  value="{! v.numberOne }" placeholder="" label="Enter a number" />
+    <lightning:button variant="base" label="Add" title="Add" onclick="{! c.addNumbers }"/>
+    
+    <h1>
+        {! v.numberOne + ' + ' + v.numberTwo + ' = ' + (v.numberOne + v.numberTwo) }
+    </h1>
+    <h1>
+        {! v.numberOne + ' + ' + v.numberTwo + ' = ' + v.sum }
+    </h1>
+    
+    <ui:outputText value="{! v.changedText }" />
+</aura:component>
