@@ -1,0 +1,7 @@
+<aura:component >
+    <aura:registerEvent name="CustomComponentEvent" type="c:CustomComponentEvent"/>
+    <lightning:button label="Fire Comp Event" onclick="{!c.fireCustomEvent}"/>
+    
+    <aura:registerEvent name="appEvent" type="c:LCFCustomAppEvent"/>
+    <p><lightning:button label="Fire App Event" onclick="{!c.fireAppEvent}" /></p>
+</aura:component>
