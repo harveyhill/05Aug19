@@ -1,0 +1,21 @@
+<aura:component >
+	<aura:attribute name="messageFromEvent" type="String"/>
+    <aura:attribute name="eventsFired" type="Integer" default="0"/>
+    
+    <aura:attribute name="messageFromAppEvent" type="String"/>
+    <aura:attribute name="appEventsFired" type="Integer" default="0"/> 
+    
+    <aura:handler name="customCompEvent" event="c:CustomComponentEvent" action="{!c.handleCustomEvent}"/>
+    <aura:handler event="c:CustomAppEvent" action="{!c.handleCustomAppEvent}"/>
+    
+    <c:LCFCustomEventNotifier/>
+    <div>
+        <p>Component Event Message: {!v.messageFromEvent}</p>
+        <p>Times Fired: {!v.eventsFired}</p>
+    </div>
+    <br/>
+    <div>
+        <P>Application Event Message: {!v.messageFromAppEvent}</P>
+        <p>Times App Event Fired: {!v.appEventsFired}</p>
+	</div>    
+</aura:component>
