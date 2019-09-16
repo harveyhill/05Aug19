@@ -1,0 +1,35 @@
+//////////////////////////////////////////////////////////////////
+//
+//	Name: Park Service Mock (Apex Integration Services)
+//	Author: Harvey Hill
+//	Date: 9/16/19
+//	Description: SOAP Service Mock for testing.
+//
+//
+//////////////////////////////////////////////////////////////////
+
+
+
+@isTest
+global class ParkServiceMock implements WebServiceMock {
+   global void doInvoke(
+           Object stub,
+           Object request,
+           Map<String, Object> response,
+           String endpoint,
+           String soapAction,
+           String requestName,
+           String responseNS,
+           String responseName,
+           String responseType) {
+        // start - specify the response you want to send
+        ParkService.byCountryResponse responseCountry = new ParkService.byCountryResponse();
+        List<String> parks = new List<String>{'Park1', 'Park2'};
+        // If a WSDL document contains an Apex reserved word, the word is appended with _x 
+        // when the Apex class is generated. For example, limit in a WSDL document converts 
+        // to limit_x in the generated Apex class. 
+        responseCountry.return_x = parks;
+        // end
+        response.put('response_x', responseCountry); 
+   }
+}
