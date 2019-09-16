@@ -1,0 +1,26 @@
+/////////////////////////////////////////////////
+//
+// Name: Park Locator (Apex Integration Services Badge)
+// Author: Harvey Hill
+// Date: 9/16/19
+// Description: Consumes a SOAP web service.
+// "Consume" means that the Web service 
+// successfully fulfills the web client's request. 
+//
+//////////////////////////////////////////////////
+
+//Nothing fancy here, a straight-forward class declaration.
+public class ParkLocator {
+    
+    //This method calls upon the class made by WSDL2Apex, 
+    //or in case that wasn't able to parse the WSDL, 
+    //one you created yourself.
+    public static List<String> country(String country) {
+        //Instantiate the WSDL2Apex Class
+        ParkService.ParksImplPort parks = new ParkService.ParksImplPort();
+        //Call upon a class method and store the resulting array of strings.
+        List<String> parksByCountry = parks.byCountry(country);
+        //Return the list.
+        return parksByCountry;
+    }
+}
