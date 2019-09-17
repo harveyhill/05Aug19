@@ -1,1 +1,60 @@
+/////////////////////////////////////////////////////////////////////////////////
+// 
+// Name: Apex Sharing Example
+// Author: Harvey Hill
+// Date: 9/17/19
+// Description: This code walks through how to use apex to share record access.
+// 
+/////////////////////////////////////////////////////////////////////////////////
 
+public class ApexSharingExample {
+
+    // This method shares record access of RecordID,
+    // to specified users or user group of UserOrGRoupID;
+    public static boolean shareAccount(){
+        
+        // We create a new AccountShare record, for all standard
+        // objects the name for this will be ObjectShare.
+        // For custom objects it will be customObject__Share.
+        AccountShare acctShr = new AccountShare(
+            // Each share record has the following properties.
+            // Other objects will refer to this by other names, such
+            // as ParentID. So check the object for exact field names.
+	        AccountID = recordID,
+            // The access Level field is named ObjectAccessLevel
+            // Three possible values exist, Edit, Read, and All.
+            // All is only used internally and we cannot assign it.
+    	    AccountAccessLevel = 'Edit',
+            // The RowCause is why it was shared, and we can create
+            // custom RowCauses. We access these using the Schema Class.
+            // This is optional, it defaults to manual, which is the only
+            // RowCause that will cause the share to be automatically 
+            // deleted on owner change.
+        	RowCause = Schema.AccountShare.RowCause.Manual,
+            // UserOrGroupID is to whom we are sharing the record.
+            UserOrGroupID = UserOrGroupID);
+        
+        // We could just insert the AccountShare, but we want to know why a share failed.
+        // We CANNOT update a share record, only insert or delete.
+        Database.SaveResult sResult = Database.insert(acctShr, false);
+        // If it was a success we return true, simple enough.
+        if(sResult.isSuccess()) {
+        	return true;
+        // Ok, so here is where it looks a little more complicated, but it really isn't. 
+        } else {
+            Database.Error errorResult = sResult.getErrors()[0];
+            // See if we get the following error, it is only because the user or group
+            // already has access. In which case we don't (and cannot) share it again.
+            if(errorResult.getStatusCode() == StatusCode.FIELD_FILTER_VALIDATION_EXCEPTION && errorResult.getMessage().contains('AccessLevel')) {
+                // User has access, so return true.
+                return true;
+            } else {
+                // It failed for another reason, so we return false.
+                return false;
+            }
+            
+        }
+        
+    }
+    
+}
