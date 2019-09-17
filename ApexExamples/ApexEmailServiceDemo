@@ -2,7 +2,7 @@
 // stating it must be, I am assuming that to be the case.
 global with sharing class ApexEmailServiceDemo implements Messaging.InboundEmailHandler{
 
-    // Messaging.InbounEmail contains information related to the email body, subject, and attachments.ApexPages. 
+    // Messaging.InboundEmail contains information related to the email body, subject, and attachments.ApexPages. 
     // Messaging.InboundEnvelope contains information regarding the envelope, such as the from address, and to address. 
     global Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email,
     Messaging.InboundEnvelope envelope) {
